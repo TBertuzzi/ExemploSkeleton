@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base:BaseView   xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:Bertuzzi.Xamarin.Forms.Mocks.Converters;assembly=Bertuzzi.Xamarin.Forms.Mocks"
+            xmlns:base="clr-namespace:Bertuzzi.Xamarin.Forms.Mocks.Views;assembly=Bertuzzi.Xamarin.Forms.Mocks"
+            xmlns:extension="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
+            xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+           BackgroundColor="Black"
+            mc:Ignorable="d" x:Class="ExemploSkeleton.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:ImageFromByteArrayConverter x:Key="imageFileCvt" />
+
+             <Color x:Key="CarregandoColor">DarkRed</Color>
+             <Color x:Key="CarregandoColorFrame">#4c6277</Color>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+  <ListView HasUnevenRows="true"
+              RowHeight="200"
+              SeparatorVisibility="None"
+              SelectionMode="None"
+              VerticalOptions="FillAndExpand"
+              BackgroundColor="Transparent"
+              ItemsSource="{Binding Pokemons}"
+             CachingStrategy="RecycleElement"
+           extension:Skeleton.IsParent="True"
+           extension:Skeleton.IsBusy="{Binding Ocupado}"
+           extension:Skeleton.Animation="Fade" >
+        
+        <ListView.ItemTemplate>
+            
+            <DataTemplate>
+                
+                <ViewCell>
+
+                     <Frame HasShadow="False"
+                           CornerRadius="16"
+                           Padding="0"
+                           IsClippedToBounds="True"
+                           Margin="10,0,10,16"
+                           extension:Skeleton.IsParent="True"
+                           extension:Skeleton.IsBusy="{Binding Ocupado}"
+                           extension:Skeleton.BackgroundColor="{StaticResource CarregandoColorFrame}">
+
+                        <Grid Padding="20,30" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                            
+                            </Grid.ColumnDefinitions>
+                        
+                            <Image HeightRequest="120" 
+                                   WidthRequest = "120"
+                                   Source="{Binding Image, Converter={StaticResource imageFileCvt}}"
+                                   extension:Skeleton.IsBusy="{Binding Ocupado}"
+	                               extension:Skeleton.BackgroundColor="{StaticResource CarregandoColor}"
+                                   extension:Skeleton.Hide="True"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.RowSpan ="2"/>
+
+                           
+                             <Label Grid.Row="0" 
+                                   Grid.Column="1"
+                                     FontSize="Medium"
+                                  extension:Skeleton.IsBusy="{Binding Ocupado}"
+	                                extension:Skeleton.BackgroundColor="{StaticResource CarregandoColor}" 
+                                   Text="{Binding Id,StringFormat='#{0}'}"/>
+
+                            <Label Grid.Row="1" 
+                                   Grid.Column="1"
+                                    extension:Skeleton.IsBusy="{Binding Ocupado}"
+	                                extension:Skeleton.BackgroundColor="{StaticResource CarregandoColor}" 
+                                   Text="{Binding Name}"
+                                   FontSize="Large"
+                                   TextColor="#FF5525"/>
+                     
+                        
+                        </Grid>
+
+                          </Frame>
+                </ViewCell>
+                
+            </DataTemplate>
+            
+        </ListView.ItemTemplate>
+        
+        
+    </ListView>
+
+</base:BaseView>
